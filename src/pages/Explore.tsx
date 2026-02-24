@@ -123,7 +123,16 @@ const Explore = () => {
 
         {/* Genre Chips */}
         <div className="relative px-[20px] xs:px-[30px] lg:px-[clamp(30px,4.95vw,78px)] pt-6 max-[500px]:pt-3 pb-2">
-          <h2 className="text-xl md:text-2xl font-bold text-foreground mb-2">Por géneros</h2>
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-xl md:text-2xl font-bold text-foreground">Por géneros</h2>
+            <button
+              onClick={() => navigate("/generos")}
+              className="flex items-center gap-1 text-muted-foreground hover:text-primary transition-colors text-sm font-medium uppercase"
+            >
+              Ver más
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
           <div className="relative">
             {/* Left fade + arrow */}
             {canScrollLeft && (
