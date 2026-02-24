@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Search, Loader2, Download, X, ChevronDown, ChevronUp } from "lucide-react";
-import { searchAnime, translateGenres, translateDemographics, type AnimeSearchResult, type AnimeSourceFilter } from "@/lib/animeApis";
+import { searchAnime, type AnimeSearchResult, type AnimeSourceFilter } from "@/lib/animeApis";
+import { normalizeGenres } from "@/lib/genreNormalizer";
 import { getTMDBLogo } from "@/lib/tmdbApi";
 import {
   Select,
@@ -27,7 +28,7 @@ const ApiAnimeSearch = ({ onApplyField, onApplyMultiple, currentTitle }: ApiAnim
   const [searching, setSearching] = useState(false);
   const [selected, setSelected] = useState<AnimeSearchResult | null>(null);
   const [expanded, setExpanded] = useState(true);
-  const [translateToSpanish, setTranslateToSpanish] = useState(true);
+  
 
   // Auto-fill query with current anime title
   useEffect(() => {
@@ -57,18 +58,16 @@ const ApiAnimeSearch = ({ onApplyField, onApplyMultiple, currentTitle }: ApiAnim
 
   const applyAll = async () => {
     if (!selected) return;
-    const genres = selected.genres || [];
-    const translatedGenres = translateToSpanish ? translateGenres(genres) : genres;
-    const demographics = selected.demographics || [];
-    const translatedDemographics = translateToSpanish ? translateDemographics(demographics) : demographics;
+    // Merge genres + demographics, then normalize to our allowed list
+    const allRawGenres = [...(selected.genres || []), ...(selected.demographics || [])];
+    const normalizedGenres = normalizeGenres(allRawGenres);
 
     const fields: Record<string, string> = {};
     if (selected.description) fields.description = selected.description;
     if (selected.year) fields.year = selected.year.toString();
     if (selected.posterUrl) fields.poster_url = selected.posterUrl;
     if (selected.bannerUrl) fields.hero_banner_url = selected.bannerUrl;
-    if (translatedGenres.length > 0) fields.genres = translatedGenres.join(", ");
-    if (translatedDemographics.length > 0) fields.demographics = translatedDemographics.join(", ");
+    if (normalizedGenres.length > 0) fields.genres = normalizedGenres.join(", ");
 
     // Collect alternative titles
     const altTitles = getAlternativeTitles();
@@ -94,13 +93,8 @@ const ApiAnimeSearch = ({ onApplyField, onApplyMultiple, currentTitle }: ApiAnim
   };
 
   const getGenres = () => {
-    const genres = selected?.genres || [];
-    return translateToSpanish ? translateGenres(genres) : genres;
-  };
-
-  const getDemographics = () => {
-    const demographics = selected?.demographics || [];
-    return translateToSpanish ? translateDemographics(demographics) : demographics;
+    const allRaw = [...(selected?.genres || []), ...(selected?.demographics || [])];
+    return normalizeGenres(allRaw);
   };
 
   const getSourceLabel = (src: string) => {
@@ -194,15 +188,6 @@ const ApiAnimeSearch = ({ onApplyField, onApplyMultiple, currentTitle }: ApiAnim
               <div className="flex items-center justify-between">
                 <p className="text-sm font-semibold">{selected.title}</p>
                 <div className="flex gap-2">
-                  <label className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <input
-                      type="checkbox"
-                      checked={translateToSpanish}
-                      onChange={(e) => setTranslateToSpanish(e.target.checked)}
-                      className="rounded"
-                    />
-                    Géneros en español
-                  </label>
                   <Button type="button" size="sm" variant="default" onClick={applyAll} className="gap-1 text-xs">
                     <Download className="h-3 w-3" />
                     Aplicar todo
@@ -247,13 +232,6 @@ const ApiAnimeSearch = ({ onApplyField, onApplyMultiple, currentTitle }: ApiAnim
                     label="Géneros"
                     value={getGenres().join(", ")}
                     onApply={() => onApplyField("genres", getGenres().join(", "))}
-                  />
-                )}
-                {getDemographics().length > 0 && (
-                  <FieldPreview
-                    label="Demografía"
-                    value={getDemographics().join(", ")}
-                    onApply={() => onApplyField("demographics", getDemographics().join(", "))}
                   />
                 )}
                 {getAlternativeTitles().length > 0 && (
