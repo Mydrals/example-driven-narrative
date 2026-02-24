@@ -11,6 +11,7 @@ export const ALLOWED_GENRES = [
   "Seinen",
   "Shoujo",
   "Shounen",
+  "Josei",
   "Recuentos de la Vida",
   "Deportes",
   "Sobrenatural",
@@ -19,6 +20,7 @@ export const ALLOWED_GENRES = [
   "Harem",
   "Terror",
   "Colegial",
+  "Isekai",
 ] as const;
 
 export type AllowedGenre = (typeof ALLOWED_GENRES)[number];
@@ -48,22 +50,28 @@ const GENRE_ALIAS_MAP: Record<string, AllowedGenre> = {
   "musica": "Musical",
   // Romance
   "romance": "Romance",
-  // Ciencia Ficción
+  // Ciencia Ficción + Mecha
   "sci-fi": "Ciencia Ficción",
   "sci fi": "Ciencia Ficción",
   "science fiction": "Ciencia Ficción",
   "ciencia ficción": "Ciencia Ficción",
   "ciencia ficcion": "Ciencia Ficción",
+  "mecha": "Ciencia Ficción",
   // Seinen
   "seinen": "Seinen",
   // Shoujo
   "shoujo": "Shoujo",
   "shōjo": "Shoujo",
   "shojo": "Shoujo",
+  "mahō shōjo": "Shoujo",
+  "mahou shoujo": "Shoujo",
+  "magical girl": "Shoujo",
   // Shounen
   "shounen": "Shounen",
   "shōnen": "Shounen",
   "shonen": "Shounen",
+  // Josei
+  "josei": "Josei",
   // Recuentos de la Vida
   "slice of life": "Recuentos de la Vida",
   "recuentos de la vida": "Recuentos de la Vida",
@@ -81,10 +89,13 @@ const GENRE_ALIAS_MAP: Record<string, AllowedGenre> = {
   "psychological": "Thriller",
   "psicológico": "Thriller",
   "psicologico": "Thriller",
+  "mystery": "Thriller",
+  "misterio": "Thriller",
   // Ecchi
   "ecchi": "Ecchi",
   // Harem
   "harem": "Harem",
+  "reverse harem": "Harem",
   // Terror
   "horror": "Terror",
   "terror": "Terror",
@@ -93,6 +104,33 @@ const GENRE_ALIAS_MAP: Record<string, AllowedGenre> = {
   "colegial": "Colegial",
   "school life": "Colegial",
   "high school": "Colegial",
+  // Isekai
+  "isekai": "Isekai",
+  // Extras que mapean a existentes
+  "martial arts": "Acción",
+  "artes marciales": "Acción",
+  "military": "Acción",
+  "militar": "Acción",
+  "parody": "Comedia",
+  "parodia": "Comedia",
+  "gourmet": "Recuentos de la Vida",
+  "kids": "Shounen",
+  "space": "Ciencia Ficción",
+  "espacio": "Ciencia Ficción",
+  "vampire": "Sobrenatural",
+  "vampiro": "Sobrenatural",
+  "demon": "Sobrenatural",
+  "demonio": "Sobrenatural",
+  "demons": "Sobrenatural",
+  "demonios": "Sobrenatural",
+  "super power": "Sobrenatural",
+  "superpoder": "Sobrenatural",
+  "samurai": "Acción",
+  "police": "Thriller",
+  "policía": "Thriller",
+  "detective": "Thriller",
+  "game": "Aventura",
+  "juego": "Aventura",
 };
 
 /**
