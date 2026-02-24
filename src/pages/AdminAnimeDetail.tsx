@@ -26,6 +26,7 @@ import {
 import { GenreAutocomplete } from "@/components/GenreAutocomplete";
 import ApiAnimeSearch from "@/components/ApiAnimeSearch";
 import BannerFocusPicker from "@/components/BannerFocusPicker";
+import BulkEpisodeImport from "@/components/BulkEpisodeImport";
 
 interface Episode {
   id: string;
@@ -635,6 +636,22 @@ const AdminAnimeDetail = () => {
                   Nuevo Episodio
                 </Button>
               </div>
+
+              <BulkEpisodeImport
+                animeId={id!}
+                animeTitle={formData.title}
+                existingEpisodeNumbers={episodes.map(e => e.episode_number)}
+                onImportComplete={async () => {
+                  // Refresh episodes list
+                  const { data } = await supabase
+                    .from("episodes")
+                    .select("id, episode_number, season_number, title, duration, original_release_date, thumbnail_url")
+                    .eq("anime_id", id!)
+                    .order("season_number", { ascending: true })
+                    .order("episode_number", { ascending: true });
+                  if (data) setEpisodes(data);
+                }}
+              />
 
               <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {episodes.map((episode) => (
