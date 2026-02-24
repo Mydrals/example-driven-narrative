@@ -26,6 +26,7 @@ import MangaDetail from "./pages/MangaDetail";
 import MangaReader from "./pages/MangaReader";
 import Explore from "./pages/Explore";
 import AllAnimes from "./pages/AllAnimes";
+import Genres from "./pages/Genres";
 import Calendario from "./pages/Calendario";
 import AdGuard from "./pages/AdGuard";
 
@@ -55,6 +56,7 @@ const App = () => (
               <Route path="/series/:slug/episode/:episodeId" element={<EpisodeDetail />} />
               <Route path="/explorar" element={<Explore />} />
               <Route path="/todos-los-animes" element={<AllAnimes />} />
+              <Route path="/generos" element={<Genres />} />
               <Route path="/mangas" element={<Mangas />} />
               <Route path="/mangas/:slug" element={<MangaDetail />} />
               <Route path="/mangas/:slug/:chapterNumber" element={<MangaReader />} />
