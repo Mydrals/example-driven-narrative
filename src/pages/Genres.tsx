@@ -63,7 +63,7 @@ const Genres = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="px-[20px] xs:px-[30px] lg:px-[clamp(30px,4.95vw,78px)] pt-6 pb-28">
+      <main className="px-[20px] xs:px-[30px] lg:px-[clamp(30px,4.95vw,78px)] pt-20 pb-28">
         <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-5">Géneros de Anime</h1>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">

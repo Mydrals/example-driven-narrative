@@ -81,7 +81,8 @@ const Header = () => {
   // Detectar si estamos en páginas con header sólido
   const isEpisodePage = location.pathname.includes('/episode/');
   const isAdminPage = location.pathname.includes('/admin') || location.pathname.includes('/profile');
-  const hasSolidHeader = isEpisodePage || isAdminPage;
+  const isGenresPage = location.pathname === '/generos';
+  const hasSolidHeader = isEpisodePage || isAdminPage || isGenresPage;
 
   return (
     <header
