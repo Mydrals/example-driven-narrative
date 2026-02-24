@@ -10,20 +10,473 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.1"
+    PostgrestVersion: "13.0.5"
   }
   public: {
     Tables: {
-      [_ in never]: never
+      animes: {
+        Row: {
+          alternative_titles: string[] | null
+          broadcast_day: number | null
+          created_at: string
+          description: string | null
+          featured: boolean
+          genres: string[] | null
+          hero_banner_url: string | null
+          id: string
+          language: string | null
+          logo_url: string | null
+          mobile_banner_focus: string
+          mobile_hero_banner_url: string | null
+          poster_url: string | null
+          slug: string
+          title: string
+          updated_at: string
+          year: number | null
+        }
+        Insert: {
+          alternative_titles?: string[] | null
+          broadcast_day?: number | null
+          created_at?: string
+          description?: string | null
+          featured?: boolean
+          genres?: string[] | null
+          hero_banner_url?: string | null
+          id?: string
+          language?: string | null
+          logo_url?: string | null
+          mobile_banner_focus?: string
+          mobile_hero_banner_url?: string | null
+          poster_url?: string | null
+          slug: string
+          title: string
+          updated_at?: string
+          year?: number | null
+        }
+        Update: {
+          alternative_titles?: string[] | null
+          broadcast_day?: number | null
+          created_at?: string
+          description?: string | null
+          featured?: boolean
+          genres?: string[] | null
+          hero_banner_url?: string | null
+          id?: string
+          language?: string | null
+          logo_url?: string | null
+          mobile_banner_focus?: string
+          mobile_hero_banner_url?: string | null
+          poster_url?: string | null
+          slug?: string
+          title?: string
+          updated_at?: string
+          year?: number | null
+        }
+        Relationships: []
+      }
+      episode_likes: {
+        Row: {
+          created_at: string
+          episode_id: string
+          id: string
+          updated_at: string
+          user_id: string
+          vote_type: string
+        }
+        Insert: {
+          created_at?: string
+          episode_id: string
+          id?: string
+          updated_at?: string
+          user_id: string
+          vote_type: string
+        }
+        Update: {
+          created_at?: string
+          episode_id?: string
+          id?: string
+          updated_at?: string
+          user_id?: string
+          vote_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "episode_likes_episode_id_fkey"
+            columns: ["episode_id"]
+            isOneToOne: false
+            referencedRelation: "episodes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      episode_progress: {
+        Row: {
+          created_at: string
+          duration: number
+          episode_id: string
+          id: string
+          progress_time: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          duration?: number
+          episode_id: string
+          id?: string
+          progress_time?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          duration?: number
+          episode_id?: string
+          id?: string
+          progress_time?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "episode_progress_episode_id_fkey"
+            columns: ["episode_id"]
+            isOneToOne: false
+            referencedRelation: "episodes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      episodes: {
+        Row: {
+          anime_id: string
+          anime_title: string | null
+          created_at: string
+          description: string | null
+          duration: string
+          episode_number: number
+          id: string
+          original_release_date: string | null
+          season_number: number
+          skip_credits_time: number | null
+          skip_credits_time_minutes: number | null
+          skip_credits_to: number | null
+          skip_credits_to_minutes: number | null
+          skip_intro_time: number | null
+          skip_intro_time_minutes: number | null
+          thumbnail_columns: number | null
+          thumbnail_count: number | null
+          thumbnail_sprite_url: string | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          anime_id: string
+          anime_title?: string | null
+          created_at?: string
+          description?: string | null
+          duration?: string
+          episode_number: number
+          id?: string
+          original_release_date?: string | null
+          season_number?: number
+          skip_credits_time?: number | null
+          skip_credits_time_minutes?: number | null
+          skip_credits_to?: number | null
+          skip_credits_to_minutes?: number | null
+          skip_intro_time?: number | null
+          skip_intro_time_minutes?: number | null
+          thumbnail_columns?: number | null
+          thumbnail_count?: number | null
+          thumbnail_sprite_url?: string | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          anime_id?: string
+          anime_title?: string | null
+          created_at?: string
+          description?: string | null
+          duration?: string
+          episode_number?: number
+          id?: string
+          original_release_date?: string | null
+          season_number?: number
+          skip_credits_time?: number | null
+          skip_credits_time_minutes?: number | null
+          skip_credits_to?: number | null
+          skip_credits_to_minutes?: number | null
+          skip_intro_time?: number | null
+          skip_intro_time_minutes?: number | null
+          thumbnail_columns?: number | null
+          thumbnail_count?: number | null
+          thumbnail_sprite_url?: string | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "episodes_anime_id_fkey"
+            columns: ["anime_id"]
+            isOneToOne: false
+            referencedRelation: "animes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      manga_chapters: {
+        Row: {
+          chapter_number: number
+          chapters_info: Json | null
+          created_at: string
+          default_view_mode: string
+          file_extensions: string[] | null
+          filename_pattern: string | null
+          folder_url: string
+          id: string
+          manga_id: string
+          single_pages: number[] | null
+          title: string | null
+          total_pages: number
+        }
+        Insert: {
+          chapter_number: number
+          chapters_info?: Json | null
+          created_at?: string
+          default_view_mode?: string
+          file_extensions?: string[] | null
+          filename_pattern?: string | null
+          folder_url: string
+          id?: string
+          manga_id: string
+          single_pages?: number[] | null
+          title?: string | null
+          total_pages?: number
+        }
+        Update: {
+          chapter_number?: number
+          chapters_info?: Json | null
+          created_at?: string
+          default_view_mode?: string
+          file_extensions?: string[] | null
+          filename_pattern?: string | null
+          folder_url?: string
+          id?: string
+          manga_id?: string
+          single_pages?: number[] | null
+          title?: string | null
+          total_pages?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "manga_chapters_manga_id_fkey"
+            columns: ["manga_id"]
+            isOneToOne: false
+            referencedRelation: "mangas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      manga_progress: {
+        Row: {
+          chapter_id: string
+          created_at: string
+          current_page: number
+          id: string
+          last_chapter_number: number
+          manga_id: string
+          total_pages: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          chapter_id: string
+          created_at?: string
+          current_page?: number
+          id?: string
+          last_chapter_number: number
+          manga_id: string
+          total_pages?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          chapter_id?: string
+          created_at?: string
+          current_page?: number
+          id?: string
+          last_chapter_number?: number
+          manga_id?: string
+          total_pages?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "manga_progress_chapter_id_fkey"
+            columns: ["chapter_id"]
+            isOneToOne: false
+            referencedRelation: "manga_chapters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "manga_progress_manga_id_fkey"
+            columns: ["manga_id"]
+            isOneToOne: false
+            referencedRelation: "mangas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mangas: {
+        Row: {
+          created_at: string
+          description: string | null
+          featured: boolean
+          hero_banner_url: string | null
+          id: string
+          mobile_banner_focus: string
+          mobile_hero_banner_url: string | null
+          poster_url: string | null
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          featured?: boolean
+          hero_banner_url?: string | null
+          id?: string
+          mobile_banner_focus?: string
+          mobile_hero_banner_url?: string | null
+          poster_url?: string | null
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          featured?: boolean
+          hero_banner_url?: string | null
+          id?: string
+          mobile_banner_focus?: string
+          mobile_hero_banner_url?: string | null
+          poster_url?: string | null
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          updated_at: string
+          username: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id: string
+          updated_at?: string
+          username?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          updated_at?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
+      user_anime_lists: {
+        Row: {
+          anime_id: string
+          created_at: string
+          id: string
+          progress: number
+          status: string
+          total_episodes: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          anime_id: string
+          created_at?: string
+          id?: string
+          progress?: number
+          status?: string
+          total_episodes?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          anime_id?: string
+          created_at?: string
+          id?: string
+          progress?: number
+          status?: string
+          total_episodes?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_anime_lists_anime_id_fkey"
+            columns: ["anime_id"]
+            isOneToOne: false
+            referencedRelation: "animes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +603,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
