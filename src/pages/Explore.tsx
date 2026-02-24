@@ -5,13 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Input } from "@/components/ui/input";
+import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -20,7 +14,8 @@ const Explore = () => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
   const [genreSearch, setGenreSearch] = useState("");
-  const [genrePopoverOpen, setGenrePopoverOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const { data: animes, isLoading } = useQuery({
     queryKey: ["all-animes"],
@@ -141,51 +136,59 @@ const Explore = () => {
               className="flex gap-2.5 overflow-x-auto scrollbar-hide"
               style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
-              {/* Search chip */}
-              <Popover open={genrePopoverOpen} onOpenChange={setGenrePopoverOpen}>
-                <PopoverTrigger asChild>
-                  <button
-                    className="shrink-0 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors whitespace-nowrap bg-muted text-foreground hover:bg-muted/80"
-                  >
-                    <Search className="w-4 h-4" strokeWidth={2.5} />
-                  </button>
-                </PopoverTrigger>
-                <PopoverContent
-                  className="w-64 p-2 bg-background border border-border z-50"
-                  align="start"
-                  sideOffset={8}
+              {/* Inline expanding search */}
+              <div className="shrink-0 flex items-center relative">
+                <button
+                  onClick={() => {
+                    const next = !searchOpen;
+                    setSearchOpen(next);
+                    if (next) {
+                      setTimeout(() => searchInputRef.current?.focus(), 150);
+                    } else {
+                      setGenreSearch("");
+                    }
+                  }}
+                  className="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors whitespace-nowrap bg-muted text-foreground hover:bg-muted/80"
                 >
-                  <Input
-                    placeholder="Buscar género..."
-                    value={genreSearch}
-                    onChange={(e) => setGenreSearch(e.target.value)}
-                    className="mb-2 h-9 text-sm bg-muted border-none"
-                    autoFocus
-                  />
-                  <div className="max-h-52 overflow-y-auto flex flex-col gap-0.5">
-                    <button
-                      onClick={() => {
-                        setSelectedGenre(null);
-                        setGenrePopoverOpen(false);
-                        setGenreSearch("");
-                      }}
-                      className={`text-left px-3 py-1.5 rounded-md text-sm transition-colors ${
-                        selectedGenre === null
-                          ? "bg-foreground text-background font-medium"
-                          : "text-foreground hover:bg-muted"
-                      }`}
-                    >
-                      Todos
-                    </button>
+                  <Search className="w-4 h-4" strokeWidth={2.5} />
+                </button>
+
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    searchOpen ? "max-w-[200px] sm:max-w-[260px] opacity-100 ml-2" : "max-w-0 opacity-0 ml-0"
+                  }`}
+                >
+                  <div className="relative">
+                    <input
+                      ref={searchInputRef}
+                      value={genreSearch}
+                      onChange={(e) => setGenreSearch(e.target.value)}
+                      placeholder="Buscar género..."
+                      className="w-[180px] sm:w-[240px] h-8 px-3 pr-8 rounded-lg text-sm bg-muted text-foreground placeholder:text-muted-foreground border-none outline-none focus:ring-1 focus:ring-primary/50"
+                    />
+                    {genreSearch && (
+                      <button
+                        onClick={() => { setGenreSearch(""); searchInputRef.current?.focus(); }}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Dropdown results */}
+                {searchOpen && genreSearch && searchFilteredGenres.length > 0 && (
+                  <div className="absolute left-0 top-full mt-2 z-50 w-64 bg-popover border border-border rounded-lg shadow-lg max-h-52 overflow-y-auto">
                     {searchFilteredGenres.map((genre) => (
                       <button
                         key={genre}
                         onClick={() => {
                           setSelectedGenre(genre);
-                          setGenrePopoverOpen(false);
+                          setSearchOpen(false);
                           setGenreSearch("");
                         }}
-                        className={`text-left px-3 py-1.5 rounded-md text-sm transition-colors ${
+                        className={`w-full text-left px-3 py-2 text-sm transition-colors ${
                           selectedGenre === genre
                             ? "bg-foreground text-background font-medium"
                             : "text-foreground hover:bg-muted"
@@ -194,12 +197,9 @@ const Explore = () => {
                         {genre}
                       </button>
                     ))}
-                    {searchFilteredGenres.length === 0 && (
-                      <p className="text-muted-foreground text-sm px-3 py-2">Sin resultados</p>
-                    )}
                   </div>
-                </PopoverContent>
-              </Popover>
+                )}
+              </div>
 
               {/* "Todos" chip */}
               <button
