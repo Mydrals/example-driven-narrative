@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 40 20% 92%;
+    --primary-foreground: 0 0% 4%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 63%;
+
+    --accent: 40 20% 92%;
+    --accent-foreground: 0 0% 4%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 40 20% 92%;
+
+    --radius: 0.5rem;
+
+    /* Brand colors */
+    --cr-orange: 40 20% 92%;
+    --cr-black: 0 0% 4%;
+    --cr-dark-gray: 0 0% 11%;
+    --cr-gray: 0 0% 20%;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(90deg, rgba(11,11,11,0.95) 0%, rgba(11,11,11,0.7) 50%, rgba(11,11,11,0.3) 100%);
+    --gradient-card: linear-gradient(180deg, rgba(11,11,11,0) 0%, rgba(11,11,11,0.8) 100%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* Ocultar scrollbar en PWA */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer y Edge */
+  }
+
+  html::-webkit-scrollbar {
+    display: none; /* Chrome, Safari y Opera */
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    overscroll-behavior: none;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* Ocultar scrollbar en PWA */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer y Edge */
+  }
+
+  body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari y Opera */
+  }
+
+  button, a, input, textarea {
+    touch-action: manipulation;
+  }
+}
+
+@layer utilities {
+  .clamp-3 {
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .scrollbar-hide {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer y Edge */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari y Opera */
+  }
+}
+

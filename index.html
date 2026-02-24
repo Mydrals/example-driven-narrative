@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<title>Nagaro — Ver Animes Doblados y Subtitulados Online Gratis en Español</title>
+    <meta name="description" content="Disfruta de los mejores animes online gratis sin anuncios. Ver anime doblado y subtitulado en español con la mejor calidad. My Hero Academia, Naruto, One Piece y más." />
+    <meta name="keywords" content="ver anime online gratis, anime doblado, anime subtitulado en español, anime sin anuncios, ver anime gratis, anime online, anime doblado español latino" />
+    <meta name="author" content="Nagaro" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://nagaro.net/" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="background-color" content="#0a0a0a" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- iOS Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Nagaro" />
+    <meta name="application-name" content="Nagaro" />
+    <link rel="apple-touch-icon" href="/icons/icon.png" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+<!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nagaro.net/" />
+    <meta property="og:title" content="Nagaro — Ver Animes Doblados y Subtitulados Online Gratis en Español" />
+    <meta property="og:description" content="Disfruta de los mejores animes online gratis sin anuncios. Ver anime doblado y subtitulado en español con la mejor calidad." />
+    <meta property="og:image" content="https://qbrclpovvhcdtkiygokh.supabase.co/storage/v1/object/public/Nagaro/OG-Nagaro.png" />
+    <meta property="og:site_name" content="Nagaro" />
+    <meta property="og:locale" content="es_ES" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://nagaro.net/" />
+    <meta name="twitter:title" content="Nagaro — Ver Animes Doblados y Subtitulados Online Gratis" />
+    <meta name="twitter:description" content="Disfruta de los mejores animes online gratis sin anuncios. Ver anime doblado y subtitulado en español." />
+    <meta name="twitter:image" content="https://qbrclpovvhcdtkiygokh.supabase.co/storage/v1/object/public/Nagaro/OG-Nagaro.png" />
+    <meta name="twitter:site" content="@Nagaro" />
+    
+    <!-- Structured Data - Website -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Nagaro",
+      "url": "https://nagaro.net/",
+      "description": "Plataforma para ver animes doblados y subtitulados online gratis en español sin anuncios",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://nagaro.net/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      },
+      "inLanguage": "es"
+    }
+    </script>
+    
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Nagaro",
+      "url": "https://nagaro.net",
+      "logo": "https://nagaro.net/logo/logo.png",
+      "sameAs": []
+    }
+    </script>
+    
+    <!-- HLS.js for video streaming -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    
+    <!-- Service Worker Registration Script -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').then(
+            registration => {
+              console.log('SW registered: ', registration);
+            },
+            error => {
+              console.log('SW registration failed: ', error);
+            }
+          );
+        });
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

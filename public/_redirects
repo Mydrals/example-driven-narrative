@@ -1,0 +1,8 @@
+# Allow robots.txt to pass directly
+/robots.txt  /robots.txt  200
+
+# Redirect sitemap.xml to edge function
+/sitemap.xml https://qbrclpovvhcdtkiygokh.supabase.co/functions/v1/sitemap 200
+
+# SPA fallback
+/*    /index.html   200

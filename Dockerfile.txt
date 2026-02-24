@@ -1,0 +1,23 @@
+# Etapa 1: Construcción
+FROM node:18-alpine AS builder
+WORKDIR /app
+
+# Copiar archivos del proyecto
+COPY package*.json ./
+RUN npm install
+
+# Copiar el resto del código
+COPY . .
+
+# Construir el proyecto (genera la carpeta dist/)
+RUN npm run build
+
+# Etapa 2: Servir los archivos estáticos con Nginx
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Exponer el puerto 80
+EXPOSE 80
+
+# Iniciar Nginx
+CMD ["nginx", "-g", "daemon off;"]
